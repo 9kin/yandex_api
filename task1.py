@@ -9,7 +9,7 @@ import pygame
 
 
 ZOOM = 15
-ll = get_ll_spn(geocoder_request(("Пермь")))
+ll, _ = get_ll_spn(geocoder_request(("Пермь")))
 
 pygame.init()
 screen = pygame.display.set_mode((600, 450))

@@ -23,7 +23,7 @@ def render_map(ll, z=10):
 
 
 render_map(ll, z=ZOOM)
-
+print(ll)
 run = True
 while run:
     for i in pygame.event.get():
@@ -42,5 +42,7 @@ while run:
                     ZOOM -= 1
                 except:
                     pass
+            elif i.key == pygame.K_LEFT:
+                ll[0] -= 1
     pygame.display.flip()
 os.remove("map.png")
