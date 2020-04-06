@@ -16,14 +16,16 @@ screen = pygame.display.set_mode((600, 450))
 
 
 def render_map(ll, z=10):
-    map_file = "map.png"
-    with open(map_file, "wb") as file:
-        get_map_ll(ll, "map", z=z).save(map_file)
-        screen.blit(pygame.image.load(map_file), (0, 0))
+    try:
+        map_file = "map.png"
+        with open(map_file, "wb") as file:
+            get_map_ll(ll, "map", z=z).save(map_file)
+            screen.blit(pygame.image.load(map_file), (0, 0))
+    except:
+        pass
 
 
 render_map(ll, z=ZOOM)
-print(ll)
 run = True
 while run:
     for i in pygame.event.get():
@@ -43,6 +45,16 @@ while run:
                 except:
                     pass
             elif i.key == pygame.K_LEFT:
-                ll[0] -= 1
+                ll[0] -= 0.075 / ZOOM
+                render_map(ll, z=ZOOM)
+            elif i.key == pygame.K_RIGHT:
+                ll[0] += 0.075 / ZOOM
+                render_map(ll, z=ZOOM)
+            elif i.key == pygame.K_UP:
+                ll[1] += 0.05 / ZOOM
+                render_map(ll, z=ZOOM)
+            elif i.key == pygame.K_DOWN:
+                ll[1] -= 0.05 / ZOOM
+                render_map(ll, z=ZOOM)
     pygame.display.flip()
 os.remove("map.png")

@@ -5,9 +5,21 @@ import math
 import random
 
 
+def to_ll(ll):
+    if type(ll[0]) == float:
+        return f"{ll[0]},{ll[1]}"
+    else:
+        return ll
+
+
+def from_ll(ll):
+    ll = ll.split(",")
+    return [float(ll[0]), float(ll[1])]
+
+
 def get_map_ll(ll, map_type, z=13):
     api_key = "dda3ddba-c9ea-4ead-9010-f43fbc15c6e3"
-    map_params = {"l": map_type, "ll": ll, "z": z}
+    map_params = {"l": map_type, "ll": to_ll(ll), "z": z}
     response = static_map_request(map_params)
     return Image.open(BytesIO(response.content))
 
@@ -20,13 +32,6 @@ def get_map(name, map_type, z=13):
 def search_requests(params):
     api_server = "https://search-maps.yandex.ru/v1/"
     return requests.get(api_server, params=params)
-
-
-def get_ll_schedule(organization):
-    hours = organization["properties"]["CompanyMetaData"]["Hours"]["text"]
-    point = organization["geometry"]["coordinates"]
-    org_point = "{0},{1}".format(point[0], point[1])
-    return org_point, hours
 
 
 def lonlat_distance(a, b):
@@ -67,7 +72,7 @@ def get_ll_spn(json_response):
     )
     toponym_coodrinates = toponym["Point"]["pos"]
     return (
-        ",".join(toponym_coodrinates.split(" ")),
+        list(map(float, toponym_coodrinates.split(" "))),
         [str((upper_x - lower_x) / 2), str((upper_y - lower_y) / 2)],
     )
 
