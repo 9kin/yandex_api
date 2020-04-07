@@ -24,7 +24,10 @@ def get_map_ll(ll, map_type, z=13, pt=None):
     else:
         map_params = {"l": map_type, "ll": to_ll(ll), "z": z}
     response = static_map_request(map_params)
-    return Image.open(BytesIO(response.content))
+    if response.status_code == 200:
+        return Image.open(BytesIO(response.content))
+    else:
+        return None
 
 
 def get_map(name, map_type, z=13):
