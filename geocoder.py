@@ -23,6 +23,12 @@ def full_adress(json):
     ]["GeocoderMetaData"]["text"]
 
 
+def get_postal_code(json):
+    return json["response"]["GeoObjectCollection"]["featureMember"][0]["GeoObject"][
+        "metaDataProperty"
+    ]["GeocoderMetaData"]["Address"]["postal_code"]
+
+
 def get_map_ll(ll, map_type, z=13, pt=None):
     api_key = "dda3ddba-c9ea-4ead-9010-f43fbc15c6e3"
     if pt is not None:
