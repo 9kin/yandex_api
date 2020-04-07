@@ -17,9 +17,12 @@ def from_ll(ll):
     return [float(ll[0]), float(ll[1])]
 
 
-def get_map_ll(ll, map_type, z=13):
+def get_map_ll(ll, map_type, z=13, pt=None):
     api_key = "dda3ddba-c9ea-4ead-9010-f43fbc15c6e3"
-    map_params = {"l": map_type, "ll": to_ll(ll), "z": z}
+    if pt is not None:
+        map_params = {"l": map_type, "ll": to_ll(ll), "z": z, "pt": pt}
+    else:
+        map_params = {"l": map_type, "ll": to_ll(ll), "z": z}
     response = static_map_request(map_params)
     return Image.open(BytesIO(response.content))
 

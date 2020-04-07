@@ -42,7 +42,7 @@ search_button = pygame_gui.elements.UIButton(
 def render_map(ll, map_type, z=10):
     try:
         with open(map_file, "wb") as file:
-            get_map_ll(ll, map_type, z=z).save(map_file)
+            get_map_ll(ll, map_type, z=z, pt=f"{ll[0]},{ll[1]},pm2dgl").save(map_file)
     except:
         pass
 
